@@ -126,8 +126,8 @@ if (!isset($_SESSION['username'])) {
     <div class="table-container">
         <h2 style="text-align: center; margin-bottom: 20px;">Daftar Pembelian</h2>
         <p style="text-align: center; font-style: italic; color: #555; margin-top: 0; margin-bottom: 20px;">
-        Daftar pembelian dibuat secara acak tiap kali halaman dibuat
-    </p>
+            Daftar pembelian dibuat secara acak tiap kali halaman dibuat
+        </p>
         <table>
             <tr>
                 <th>Kode Barang</th>
@@ -142,37 +142,32 @@ if (!isset($_SESSION['username'])) {
             $nama_barang  = ["Sabun", "Shampoo", "Susu", "Teh Kotak", "Kopi"];
             $harga_barang = [3000, 5000, 12000, 4000, 3000];
 
-            $beli = [];
-            $jumlah = [];
-            $total  = [];
+            // Buat array gabungan supaya bisa pakai foreach
+            $items = [];
+            for ($i = 0; $i < count($kode_barang); $i++) {
+                $items[] = [
+                    'kode' => $kode_barang[$i],
+                    'nama' => $nama_barang[$i],
+                    'harga' => $harga_barang[$i],
+                    'jumlah' => rand(1, 5),
+                ];
+            }
+
             $grandtotal = 0;
 
-            for ($i = 0; $i < 5; $i++) {
-                // jumlah pembelian acak 1 - 5
-                $jumlah[$i] = rand(1, 5);
-
-                if ($jumlah[$i] > 0) {
-                    $beli[] = $nama_barang[$i]; // simpan barang yang dibeli
-                }
-
-                // total harga
-                $total[$i] = $harga_barang[$i] * $jumlah[$i];
-
-                // tambah ke grand total
-                $grandtotal += $total[$i];
+            foreach ($items as $item) {
+                $total = $item['harga'] * $item['jumlah'];
+                $grandtotal += $total;
 
                 echo "<tr>";
-                echo "<td>{$kode_barang[$i]}</td>";
-                echo "<td>{$nama_barang[$i]}</td>";
-                echo "<td>Rp " . number_format($harga_barang[$i], 0, ',', '.') . "</td>";
-                echo "<td>{$jumlah[$i]}</td>";
-
+                echo "<td>{$item['kode']}</td>";
+                echo "<td>{$item['nama']}</td>";
+                echo "<td>Rp " . number_format($item['harga'], 0, ',', '.') . "</td>";
+                echo "<td>{$item['jumlah']}</td>";
+                echo "<td>Rp " . number_format($total, 0, ',', '.') . "</td>";
                 echo "</tr>";
             }
             ?>
-
-
-
         </table>
     </div>
 
