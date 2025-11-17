@@ -167,6 +167,10 @@ if (!isset($_SESSION['username'])) {
                 echo "<td>Rp " . number_format($total, 0, ',', '.') . "</td>";
                 echo "</tr>";
             }
+echo "<tr style='font-weight:bold; background:#4ecdc4; color:white;'>";
+echo "<td colspan='4' style='text-align:right;'>Total Belanja</td>";
+echo "<td>Rp " . number_format($grandtotal, 0, ',', '.') . "</td>";
+echo "</tr>";
             ?>
         </table>
     </div>
