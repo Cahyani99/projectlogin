@@ -18,7 +18,6 @@ if (!isset($_SESSION['username'])) {
             margin: 0;
         }
 
-        /* HEADER ATAS */
         .topbar {
             width: 100%;
             background: #ffffffdd;
@@ -29,7 +28,6 @@ if (!isset($_SESSION['username'])) {
             align-items: center;
         }
 
-        /* LOGO DAN POLGAN MART SEBELAH KIRI */
         .logo-area {
             display: flex;
             align-items: center;
@@ -47,10 +45,9 @@ if (!isset($_SESSION['username'])) {
             color: #1e7f8c;
         }
 
-        /* WELCOME TEXT SEBELAH KANAN */
         .right-area {
             text-align: right;
-            padding-right: 60px; /* ✔️ GESER KE KIRI BIAR GAK MELETET KE UJUNG */
+            padding-right: 60px;
         }
 
         .welcome-text {
@@ -75,7 +72,6 @@ if (!isset($_SESSION['username'])) {
             cursor: pointer;
         }
 
-        /* TABEL PRODUK */
         .table-container {
             margin: 40px auto;
             width: 80%;
@@ -96,7 +92,6 @@ if (!isset($_SESSION['username'])) {
             background: #4ecdc4;
             color: white;
             padding: 12px;
-            border-radius: 6px;
         }
 
         td {
@@ -112,18 +107,15 @@ if (!isset($_SESSION['username'])) {
 </head>
 <body>
 
-    <!-- HEADER -->
     <div class="topbar">
 
-        <!-- KIRI -->
         <div class="logo-area">
             <img src="img/logomart.jfif" alt="logo">
             <div class="polgan-text">POLGAN MART</div>
         </div>
 
-        <!-- KANAN -->
         <div class="right-area">
-            <div class="welcome-text">Selamat Datang, <?= $_SESSION['username']; ?>!</div>
+            <div class="welcome-text">Selamat Datang, <?= htmlspecialchars($_SESSION['username']); ?>!</div>
             <div class="role-text">Role: Mahasiswa</div>
             <button class="btn-logout" onclick="location.href='logout.php'">Logout</button>
         </div>
@@ -132,11 +124,17 @@ if (!isset($_SESSION['username'])) {
 
     <!-- TABEL PRODUK -->
     <div class="table-container">
+        <h2 style="text-align: center; margin-bottom: 20px;">Daftar Pembelian</h2>
+        <p style="text-align: center; font-style: italic; color: #555; margin-top: 0; margin-bottom: 20px;">
+        Daftar pembelian dibuat secara acak tiap kali halaman dibuat
+    </p>
         <table>
             <tr>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Total</th>
             </tr>
 
             <?php
@@ -144,14 +142,37 @@ if (!isset($_SESSION['username'])) {
             $nama_barang  = ["Sabun", "Shampoo", "Susu", "Teh Kotak", "Kopi"];
             $harga_barang = [3000, 5000, 12000, 4000, 3000];
 
+            $beli = [];
+            $jumlah = [];
+            $total  = [];
+            $grandtotal = 0;
+
             for ($i = 0; $i < 5; $i++) {
+                // jumlah pembelian acak 1 - 5
+                $jumlah[$i] = rand(1, 5);
+
+                if ($jumlah[$i] > 0) {
+                    $beli[] = $nama_barang[$i]; // simpan barang yang dibeli
+                }
+
+                // total harga
+                $total[$i] = $harga_barang[$i] * $jumlah[$i];
+
+                // tambah ke grand total
+                $grandtotal += $total[$i];
+
                 echo "<tr>";
                 echo "<td>{$kode_barang[$i]}</td>";
                 echo "<td>{$nama_barang[$i]}</td>";
                 echo "<td>Rp " . number_format($harga_barang[$i], 0, ',', '.') . "</td>";
+                echo "<td>{$jumlah[$i]}</td>";
+
                 echo "</tr>";
             }
             ?>
+
+
+
         </table>
     </div>
 
