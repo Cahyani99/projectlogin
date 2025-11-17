@@ -1,3 +1,27 @@
+<?php
+session_start();
+
+if (isset($_POST['login'])) {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $user = "admin";
+    $pass = "1234";
+
+    if ($username == $user && $password == $pass) {
+
+        $_SESSION['username'] = $username;
+        header("Location: dashboard.php");
+        exit();
+
+    } else {
+        $error = "Username atau Password salah!";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,6 +133,13 @@
 
     <div class="card">
         <h2>Polgan Mart</h2>
+
+        <?php if (!empty($error)) { ?>
+    <p style="color: red; text-align:center; font-weight:bold;">
+        <?= $error ?>
+    </p>
+<?php } ?>
+
 
         <form action="index.php" method="post">
             <label>Username</label>
