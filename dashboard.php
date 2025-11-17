@@ -167,9 +167,36 @@ if (!isset($_SESSION['username'])) {
                 echo "<td>Rp " . number_format($total, 0, ',', '.') . "</td>";
                 echo "</tr>";
             }
+
+// Hitung diskon dan persentase diskon
+if ($grandtotal < 50000) {
+    $persen_diskon = 5;
+    $diskon = 0.05 * $grandtotal;
+} elseif ($grandtotal <= 100000) {
+    $persen_diskon = 10;
+    $diskon = 0.10 * $grandtotal;
+} else {
+    $persen_diskon = 15;
+    $diskon = 0.15 * $grandtotal;
+}
+
+$total_bayar = $grandtotal - $diskon;
+
+//Baris Grand Total
 echo "<tr style='font-weight:bold; background:#4ecdc4; color:white;'>";
 echo "<td colspan='4' style='text-align:right;'>Total Belanja</td>";
 echo "<td>Rp " . number_format($grandtotal, 0, ',', '.') . "</td>";
+echo "</tr>";
+// Tampilkan diskon dengan persentase
+echo "<tr style='font-weight:bold; background:#ffda7e; color:#555;'>";
+echo "<td colspan='4' style='text-align:right;'>Diskon</td>";
+echo "<td>- Rp " . number_format($diskon, 0, ',', '.') . " ({$persen_diskon}%)</td>";
+echo "</tr>";
+
+// Tampilkan total bayar
+echo "<tr style='font-weight:bold; background:#4ecdc4; color:white;'>";
+echo "<td colspan='4' style='text-align:right;'>Total Bayar</td>";
+echo "<td>Rp " . number_format($total_bayar, 0, ',', '.') . "</td>";
 echo "</tr>";
             ?>
         </table>
