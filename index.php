@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     if ($username == $user && $password == $pass) {
 
         $_SESSION['username'] = $username;
-        header("Location: dashboard.php");
+        header("Location: dashboard2.php");
         exit();
 
     } else {
